@@ -32,4 +32,6 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
       - name: Build with Gradle
         run: ./gradlew clean assemble
-  
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
