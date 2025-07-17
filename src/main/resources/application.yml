@@ -23,8 +23,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.SQLServerDialect
-    properties:
-      ddl-auto= update
+    
 
 microsoft:
   vault: #springdemosp
