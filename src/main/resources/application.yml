@@ -16,13 +16,15 @@ spring:
     url: "jdbc:sqlserver://springprimarydemo.database.windows.net:1433;database=u3b3afa7779b;Encrypt=true;TrustServerCertificate=false;HostNameInCertificate=*.database.windows.net;loginTimeout=30"
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
     dataSourceProperties.ColumnEncryptionSetting: "Enabled"
-    username: <DB USER>
-    password: <DB PASSWORD>
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
 
   jpa:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.SQLServerDialect
+    properties:
+      ddl-auto= update
 
 microsoft:
   vault: #springdemosp
