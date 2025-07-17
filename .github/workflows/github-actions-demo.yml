@@ -1,5 +1,5 @@
 name: GitHub Actions Demo
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+run-name: ${{ github.actor }} is CI/CD 🚀
 on: [push]
 jobs:
   Explore-GitHub-Actions:
@@ -27,7 +27,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: 17
+          java-version: 8
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
       - name: Build with Gradle
@@ -35,3 +35,14 @@ jobs:
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}/build/libs
+
+      - name: Upload the artifact for reuse
+        uses: actions/upload-artifact@v4
+        with:
+          name: spring-music-sqldb
+          path: ${{ github.workspace }}/build/libs
+          if-no-files-found: warn
+          retention-days: 1
+          compression-level: 6
+          overwrite: false
+          include-hidden-files: false
