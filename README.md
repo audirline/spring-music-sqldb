@@ -80,7 +80,7 @@ Cloud Foundry also allows service connection information and credentials to be p
 These steps use examples for username, password, host name, and database name that should be replaced with real values.
 
 ~~~
-# create a user-provided Oracle database service instance
+# create a user-provided Oracle database service instance2
 $ cf create-user-provided-service oracle-db -p '{"uri":"oracle://root:secret@dbserver.example.com:1521/mydatabase"}'
 # create a user-provided MySQL database service instance
 $ cf create-user-provided-service mysql-db -p '{"uri":"mysql://root:secret@dbserver.example.com:3306/mydatabase"}'
