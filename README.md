@@ -140,7 +140,7 @@ The code that does the enablement could be found in the class `org.cloudfoundry.
 
 ## Important!!
 
-If the keys are being changed, table dropped and re-encypted clear database cache
+If the keys are being changed not, table dropped and re-encypted clear database cache
 
 ```
 ALTER DATABASE SCOPED CONFIGURATION CLEAR PROCEDURE_CACHE;
