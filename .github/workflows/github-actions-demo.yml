@@ -20,6 +20,9 @@ jobs:
 
   build-code-gradle:
     runs-on: ubuntu-latest
+    env:
+      DB_USERNAME: ${secret.DB_USERNAME}
+      DB_PASSWORD: ${secret.DB_PASSWORD}
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
@@ -37,6 +40,7 @@ jobs:
       - name: Check if the app is build and present
         run: |
           ls ${{ github.workspace }}/build/libs
+          cat ${{ github.workspace }}/src/main/ressources/application.yml
 
       - name: Upload the artifact for reuse
         uses: actions/upload-artifact@v4
