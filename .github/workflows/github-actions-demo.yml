@@ -23,16 +23,18 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
+        
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: 8
+          
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
       - name: Build with Gradle
         run: ./gradlew clean assemble
-      - name: List files in the repository
+      - name: Check if the app is build and present
         run: |
           ls ${{ github.workspace }}/build/libs
 
