@@ -13,7 +13,7 @@ management:
 spring:
   profiles: sqlserver-local
   datasource:
-    url: "jdbc:sqlserver://springprimarydemo.database.windows.net:1433;database=u3b3afa7779b;Encrypt=true;TrustServerCertificate=false;HostNameInCertificate=*.database.windows.net;loginTimeout=30"
+    url: "jdbc:sqlserver://dssbe.database.windows.net:1433;database=music;Encrypt=true;TrustServerCertificate=false;HostNameInCertificate=*.database.windows.net;loginTimeout=30"
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
     dataSourceProperties.ColumnEncryptionSetting: "Enabled"
     username: ${DB_USERNAME}
