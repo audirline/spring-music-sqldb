@@ -21,6 +21,8 @@ jobs:
         run: chmod +x gradlew
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
+      - name: Display Gradle version
+        run: ./gradlew --version
       - name: Build with Gradle
         run: ./gradlew clean assemble
       - name: Check if the app is build and present
