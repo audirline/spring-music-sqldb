@@ -32,6 +32,9 @@ jobs:
       - name: Generate JaCoCo Badge
         id: jacoco
         uses: cicirello/jacoco-badge-generator@v2
+        with:
+          generate-branches-badge: true
+          jacoco-csv-file: "**/jacoco.csv"
       - name: Check if the app is build and present
         run: |
           ls ${{ github.workspace }}/build/libs
