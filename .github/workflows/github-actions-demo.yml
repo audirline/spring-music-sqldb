@@ -45,7 +45,7 @@ jobs:
 #          java -Dspring.profiles.active=sqlserver-local -jar ${{ github.workspace }}/build/libs/spring-music-sqldb-1.0.jar
 
       - name: Scan the code with SonarQube
-        uses: sonarsource/sonarcloud-github-action@latest # Ex: v4.0.0, See the latest version at https://github.com/marketplace/actions/sonarcloud-scan
+        uses: SonarSource/sonarcloud-github-action@v5.0.0 # Ex: v4.0.0, See the latest version at https://github.com/marketplace/actions/sonarcloud-scan
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
