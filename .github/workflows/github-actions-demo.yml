@@ -43,7 +43,6 @@ jobs:
           args: >
             -Dsonar.organization=audirline
             -Dsonar.projectKey=audirline_spring-music-sqldb
-            
         env:
           SONAR_TOKEN: '${{ secrets.SONAR_TOKEN }}'
       - name: Upload the artifact for reuse
