@@ -50,6 +50,6 @@ jobs:
           args: >
             -Dsonar.organization=audirline
             -Dsonar.projectKey=audirline_spring-music-sqldb
-            -Dsonar.java.binaries=build/classes
+            -Dsonar.java.binaries=build/
         env:
           SONAR_TOKEN: '${{ secrets.SONAR_TOKEN }}'
