@@ -49,7 +49,7 @@ jobs:
         with: 
           args: >
             -Dsonar.organization=audirline # For SonarQube Cloud only
-            -Dsonar.projectKey=audirline_spring-music-sqldb
+            -Dsonar.projectkey=audirline_spring-music-sqldb
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
