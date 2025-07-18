@@ -39,7 +39,7 @@ jobs:
           ls ${{ github.workspace }}/build/libs
       - name: Check classes directory
         run: |
-          ls -lrth ${{ github.workspace }}/build/classes/*
+          ls -lRth ${{ github.workspace }}/build/classes/*
       - name: Scan the code with SonarQube
         uses: SonarSource/sonarqube-scan-action@v5.2.0
         with:
