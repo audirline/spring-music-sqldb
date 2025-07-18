@@ -25,6 +25,10 @@ jobs:
         run: ./gradlew --version
       - name: Build with Gradle
         run: ./gradlew clean assemble
+      - name: Tests Jacoco
+        run: ./gradlew test jacocoTestReport
+      - name: Check if reports are present
+        run: ls -lRth ${{ github.workspace }}/build/reports/
       - name: Check if the app is build and present
         run: |
           ls ${{ github.workspace }}/build/libs
