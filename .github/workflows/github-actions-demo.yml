@@ -46,6 +46,10 @@ jobs:
 
       - name: Scan the code with SonarQube
         uses: SonarSource/sonarqube-scan-action@v5.2.0
+        with: 
+          args: >
+            -Dsonar.organization=audirline # For SonarQube Cloud only
+            -Dsonar.projectKey=spring-music-sqldb
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
