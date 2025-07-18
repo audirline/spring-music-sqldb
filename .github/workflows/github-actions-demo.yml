@@ -29,15 +29,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 8
-      - name: Scan the code with SonarQube
-        uses: SonarSource/sonarqube-scan-action@v5.2.0
-        with:
-          args: >
-            -Dsonar.organization=audirline
-            -Dsonar.projectKey=audirline_spring-music-sqldb
-        env:
-          SONAR_TOKEN: '${{ secrets.SONAR_TOKEN }}'
+          java-version: 8   
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
       - name: Build with Gradle
@@ -45,6 +37,15 @@ jobs:
       - name: Check if the app is build and present
         run: |
           ls ${{ github.workspace }}/build/libs
+      - name: Scan the code with SonarQube
+        uses: SonarSource/sonarqube-scan-action@v5.2.0
+        with:
+          args: >
+            -Dsonar.organization=audirline
+            -Dsonar.projectKey=audirline_spring-music-sqldb
+            -Dsonar.java.binaries=build/classes
+        env:
+          SONAR_TOKEN: '${{ secrets.SONAR_TOKEN }}'
       - name: Upload the artifact for reuse
         uses: actions/upload-artifact@v4
         with:
