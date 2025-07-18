@@ -37,6 +37,9 @@ jobs:
       - name: Check if the app is build and present
         run: |
           ls ${{ github.workspace }}/build/libs
+      - name: Check classes directory
+        run: |
+          ls ${{ github.workspace }}/build/classes
       - name: Scan the code with SonarQube
         uses: SonarSource/sonarqube-scan-action@v5.2.0
         with:
