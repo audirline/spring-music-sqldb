@@ -50,6 +50,7 @@ jobs:
           args: >
             -Dsonar.organization=audirline # For SonarQube Cloud only
             -Dsonar.projectKey=audirline_spring-music-sqldb
+            -Dsonar.host.url=https://sonarCloud.io
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
