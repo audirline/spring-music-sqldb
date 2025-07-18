@@ -40,7 +40,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build-artifacts
-          path: build2
+          path: build
       - name: Check classes directory
         run: |
           ls -lRth ${{ github.workspace }}/build/classes/*
@@ -50,6 +50,6 @@ jobs:
           args: >
             -Dsonar.organization=audirline
             -Dsonar.projectKey=audirline_spring-music-sqldb
-            -Dsonar.java.binaries=build2/
+            -Dsonar.java.binaries=build/
         env:
           SONAR_TOKEN: '${{ secrets.SONAR_TOKEN }}'
