@@ -1,6 +1,5 @@
 ![Coverage](https://audirline.github.io/spring-music-sqldb/badges/jacoco.svg)
 ![Branches](https://audirline.github.io/spring-music-sqldb/badges/branches.svg)
-![lines](https://audirline.github.io/spring-music-sqldb/badges/lines.svg)
 
 
 Spring Music
