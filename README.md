@@ -39,4 +39,4 @@ If no profile is provided, an in-memory relational database will be used. If any
 If more than one of these profiles is provided, the application will throw an exception and fail to start.
 
 
-[![Test Coverage]([https://drakulavich.github.io/spring-boot-realworld-example-app/](https://audirline.github.io/spring-music-sqldb/))
+[![Test Coverage](https://cdn.hackernoon.com/images/2hVuiN1gfbdO9OXUxjCttPNETq73-2022-08-08T22:19:48.257Z-cl6lbgrz6002p0as65v8sfgja)](https://audirline.github.io/spring-music-sqldb/)
