@@ -1,0 +1,5 @@
+[[rules]]
+id = "custom-password-rule"
+description = "Hardcoded password pattern (e.g. password: something)"
+regex = '''(?i)password\s*[:=]\s*["']?.{6,64}["']?'''
+tags = ["custom", "password"]
