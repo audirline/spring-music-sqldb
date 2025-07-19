@@ -5,7 +5,7 @@ useDefault = true
 [[rules]]
 id = "simple-pass-1"
 description = "awesome rule 1"
-regex = '''one-go-style-regex-for-this-rule'''
+regex = '''(?i)(password\s*[:=]\s*["']?[a-zA-Z0-9@!#\$%\^&\*]{6,32}["']?)'''
 keywords = [
   "auth",
   "password",
