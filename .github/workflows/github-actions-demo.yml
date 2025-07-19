@@ -40,12 +40,22 @@ jobs:
           generate-lines-badge: true
           jacoco-csv-file: build/reports/jacoco/test/jacocoTestReport.csv
           badges-directory: build/reports/jacoco/test/html/badges
-      - name: OWASP Dependency Check
-        uses: dependency-check/github-action@v8
+      - name: Dependency Check
+        uses: dependency-check/Dependency-Check_Action@1.1.0
+        id: Depcheck
         with:
-          scan: '.'
-          format: 'ALL'
-          failOnCVSS: '7'
+          project: 'test'
+          path: '.'
+          format: 'HTML'
+          out: 'reports' # this is the default, no need to specify unless you wish to override it
+          args: >
+            --failOnCVSS 7
+            --enableRetired
+      - name: Upload Test results
+        uses: actions/upload-artifact@master
+        with:
+           name: Depcheck report
+           path: ${{github.workspace}}/reports
       - name: Check if the app is build and present
         run: |
           ls ${{ github.workspace }}/build/libs
