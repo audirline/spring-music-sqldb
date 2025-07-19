@@ -17,7 +17,7 @@ spring:
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
     dataSourceProperties.ColumnEncryptionSetting: "Enabled"
     username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    password: admin123
 
   jpa:
     properties:
