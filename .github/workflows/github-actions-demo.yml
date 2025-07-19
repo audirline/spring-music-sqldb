@@ -10,10 +10,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+      - name: check rules
+        run: ls -lrth .github/gitleaks-rules
       - name: Run Gitleaks
         uses: gitleaks/gitleaks-action@v2
         with:
-          config-path: ${{ github.workspace }}/.github/gitleaks-rules
+          config-path: .github/gitleaks-rules
           fail: true
 
   build-code-gradle:
