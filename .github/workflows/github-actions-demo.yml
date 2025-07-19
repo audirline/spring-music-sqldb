@@ -63,6 +63,11 @@ jobs:
           mkdir -p site/reports/owasp
           cp -r build/reports/jacoco/test/html/* site/reports/jacoco/
           cp reports/dependency-check-report.html site/reports/owasp/
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts
+          path: build
       - name: Publish coverage report to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
