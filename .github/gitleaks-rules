@@ -5,7 +5,8 @@ useDefault = true
 [[rules]]
 id = "simple-pass-1"
 description = "awesome rule 1"
-regex = '''(?i)(password\s*[:=]\s*["']?[a-zA-Z0-9@!#\$%\^&\*]{6,32}["']?)'''
+regex = '''(?i)(password|pwd|passwd)\s*[:=]\s*["']?(admin|admin123|password|123456|12345678|qwerty|azerty|letmein|welcome|test|abc123|000000)["']?'''
+tags = ["password", "weak", "credential"]
 keywords = [
   "auth",
   "password",
