@@ -15,9 +15,18 @@ jobs:
       - name: Run Gitleaks
         uses: gitleaks/gitleaks-action@v2.3.9
         env:
-          GITLEAKS_NOTIFY_USER_LIST: thanh.nguyen23@gmail.com
           GITLEAKS_CONFIG: .github/gitleaks-rules
           GITLEAKS_ENABLE_SUMMARY: true
+      - name: Générer le badge Gitleaks
+        if: always()
+        run: |
+          mkdir -p .badges
+          if [ "${{ job.status }}" == "success" ]; then
+            echo '{"schemaVersion":1,"label":"Gitleaks","message":"passed","color":"brightgreen"}' > .badges/gitleaks-badge.json
+          else
+            echo '{"schemaVersion":1,"label":"Gitleaks","message":"failed","color":"red"}' > .badges/gitleaks-badge.json
+          fi
+
           
 
   build-code-gradle:
@@ -85,6 +94,13 @@ jobs:
         with:
           name: build-artifacts
           path: build
+
+      - name: Copier le badge Gitleaks
+        if: always()
+        run: |
+          mkdir -p site/badges
+          cp .badges/gitleaks-badge.json site/badges/
+
       - name: Publish coverage report to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
