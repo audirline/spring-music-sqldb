@@ -1,7 +1,11 @@
 ![Coverage](https://audirline.github.io/spring-music-sqldb/reports/jacoco/badges/jacoco.svg)
 ![Branches](https://audirline.github.io/spring-music-sqldb/reports/jacoco/badges/branches.svg)
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=audirline_spring-music-sqldb&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=audirline_spring-music-sqldb)
+
 [![Rapport OWASP](https://img.shields.io/badge/OWASP-View-blue)](https://audirline.github.io/spring-music-sqldb/reports/owasp/dependency-check-report.html)
+
+[![Build Status](https://github.com/audirline/spring-music-sqldb/actions/workflows/github-actions-demo.yml/badge.svg)](https://github.com/audirline/spring-music-sqldb/actions/workflows/github-actions-demo.yml)
 
 
 Spring Music
