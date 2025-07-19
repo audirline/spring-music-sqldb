@@ -1,5 +1,0 @@
-[[rules]]
-id = "custom-password-rule"
-description = "Hardcoded password pattern (e.g. password: something)"
-regex = '''(?i)(password\s*[:=]\s*["']?[a-zA-Z0-9@!#\$%\^&\*]{6,32}["']?)'''
-tags = ["custom", "password"]
