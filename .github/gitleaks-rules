@@ -1,0 +1,13 @@
+title = "Custom Gitleaks configuration"
+[extend]
+useDefault = true
+
+[[rules]]
+id = "simple-pass-1"
+description = "awesome rule 1"
+regex = '''one-go-style-regex-for-this-rule'''
+keywords = [
+  "auth",
+  "password",
+  "token",
+]
