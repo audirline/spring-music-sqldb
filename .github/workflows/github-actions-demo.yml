@@ -1,4 +1,4 @@
-name: CI/CD avec SonarQube
+name: Build and code check
 'on':
   push:
     branches:
