@@ -16,7 +16,7 @@ jobs:
         uses: gitleaks/gitleaks-action@v2.3.9
         env:
           GITLEAKS_NOTIFY_USER_LIST: thanh.nguyen23@gmail.com
-          GITLEAKS_CONFIG: .github/gitleaks-rules.toml
+          GITLEAKS_CONFIG: .github/gitleaks-rules
           GITLEAKS_ENABLE_SUMMARY: true
           
 
