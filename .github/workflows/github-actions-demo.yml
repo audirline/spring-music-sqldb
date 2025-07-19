@@ -36,6 +36,8 @@ jobs:
         uses: cicirello/jacoco-badge-generator@v2
         with:
           generate-branches-badge: true
+          generate-coverage-badge: true
+          generate-lines-badge: true
           jacoco-csv-file: build/reports/jacoco/test/jacocoTestReport.csv
           badges-directory: build/reports/jacoco/test/html/badges
       - name: Check if the app is build and present
