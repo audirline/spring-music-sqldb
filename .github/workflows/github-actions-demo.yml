@@ -21,15 +21,13 @@ jobs:
         run: chmod +x gradlew
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
-      - name: Display Gradle version
-        run: ./gradlew --version
       - name: Build with Gradle
         run: ./gradlew clean assemble
       - name: Tests Jacoco
         run: ./gradlew test jacocoTestReport
       - name: Check if reports are present
         run: ls -lRth ${{ github.workspace }}/build/reports/
-      - name: check report 2
+      - name: Check generated report
         run: more ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.csv
       - name: Generate JaCoCo Badge
         id: jacoco
@@ -37,11 +35,12 @@ jobs:
         with:
           generate-branches-badge: true
           generate-coverage-badge: true
-          generate-lines-badge: true
           jacoco-csv-file: build/reports/jacoco/test/jacocoTestReport.csv
           badges-directory: build/reports/jacoco/test/html/badges
       - name: Dependency Check
         uses: dependency-check/Dependency-Check_Action@1.1.0
+        env: 
+          JAVA_HOME: /opt/jdk
         id: Depcheck
         with:
           project: 'test'
