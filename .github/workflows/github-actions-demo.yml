@@ -55,6 +55,8 @@ jobs:
         with:
            name: Depcheck report
            path: ${{github.workspace}}/reports
+      - name: Check owasp report location
+        run: ls -lRth ${{github.workspace}}/reports
       - name: Déplacer le rapport OWASP dans le dossier à publier
         run: mkdir -p build/reports/owasp && cp dependency-check-report.html build/reports/owasp/
       - name: Publier rapport OWASP sur GitHub Pages
