@@ -1,7 +1,7 @@
 ![Coverage](https://audirline.github.io/spring-music-sqldb/reports/jacoco/badges/jacoco.svg)
 ![Branches](https://audirline.github.io/spring-music-sqldb/reports/jacoco/badges/branches.svg)
 
-[Voir le rapport OWASP Dependency-Check](https://audirline.github.io/spring-music-sqldb/reports/owasp/dependency-check-report.html)
+[![Rapport OWASP](https://img.shields.io/badge/OWASP-View-blue)](https://audirline.github.io/spring-music-sqldb/reports/owasp/dependency-check-report.html)
 
 
 Spring Music
