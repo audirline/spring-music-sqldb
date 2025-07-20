@@ -15,8 +15,10 @@ jobs:
       - name: Checkstyle for Java
         uses: dbelyaev/action-checkstyle@v1.21.1
         with:
-          checkstyle_version: "9.0"
+          checkstyle_version: "10.26.1"
           workdir: src/main/java
+          level: warning
+          checkstyle_config: google_checks.xml
 
           
   Check-if-code-contains-sensitive-infos:
