@@ -18,7 +18,7 @@ jobs:
           checkstyle_version: "10.26.1"
           workdir: src/main/java
           level: warning
-          checkstyle_config: google_checks.xml
+          checkstyle_config: google4545_checks.xml
 
           
   Check-if-code-contains-sensitive-infos:
