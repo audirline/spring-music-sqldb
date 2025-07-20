@@ -1,0 +1,165 @@
+name: Build and code check
+'on':
+  push:
+    branches:
+      - master
+jobs:
+
+  Check-code-quality-style:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Checkstyle for Java
+        uses: dbelyaev/action-checkstyle@v1.21.1
+        with:
+          checkstyle_version: "10.26.1"
+          workdir: src/main/java
+          level: warning
+          checkstyle_config: google_checks.xml
+
+          
+  Check-if-code-contains-sensitive-infos:
+    needs: Check-code-quality-style
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: check rules
+        run: ls -lrth .github/gitleaks-rules
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@v2.3.9
+        env:
+          GITLEAKS_CONFIG: .github/gitleaks-rules
+          GITLEAKS_ENABLE_SUMMARY: true
+      - name: Générer le badge Gitleaks
+        if: always()
+        run: |
+          mkdir -p .badges
+          if [ "${{ job.status }}" == "success" ]; then
+            echo '{"schemaVersion":1,"label":"Gitleaks","message":"passed","color":"brightgreen"}' > .badges/gitleaks-badge.json
+          else
+            echo '{"schemaVersion":1,"label":"Gitleaks","message":"failed","color":"red"}' > .badges/gitleaks-badge.json
+          fi
+      - name: Upload Gitleaks badge
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gitleaks-badge
+          path: .badges/gitleaks-badge.json
+
+
+
+          
+
+  build-code-gradle:
+    needs: Check-if-code-contains-sensitive-infos
+    runs-on: ubuntu-latest
+    env:
+      DB_USERNAME: '${{ secrets.DB_USERNAME }}'
+      DB_PASSWORD: '${{ secrets.DB_PASSWORD }}'
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 8
+      - name: Donner les droits d'exécution à Gradle
+        run: chmod +x gradlew
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+      - name: Build with Gradle
+        run: ./gradlew clean assemble
+      - name: Tests Jacoco
+        run: ./gradlew test jacocoTestReport
+      - name: Check if reports are present
+        run: ls -lRth ${{ github.workspace }}/build/reports/
+      - name: Check generated report
+        run: more ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.csv
+      - name: Generate JaCoCo Badge
+        id: jacoco
+        uses: cicirello/jacoco-badge-generator@v2
+        with:
+          generate-branches-badge: true
+          generate-coverage-badge: true
+          jacoco-csv-file: build/reports/jacoco/test/jacocoTestReport.csv
+          badges-directory: build/reports/jacoco/test/html/badges
+      - name: Dependency Check
+        uses: dependency-check/Dependency-Check_Action@1.1.0
+        env: 
+          JAVA_HOME: /opt/jdk
+        id: Depcheck
+        with:
+          project: 'test'
+          path: '.'
+          format: 'HTML'
+          #out: 'reports' # this is the default, no need to specify unless you wish to override it
+          args: >
+            --failOnCVSS 7
+            --enableRetired
+      - name: Check owasp report location
+        run: ls -lRth ${{github.workspace}}/reports
+      - name: Check if the app is build and present
+        run: |
+          ls ${{ github.workspace }}/build/libs
+      - name: Check the badges
+        run: ls -lRth build/reports/jacoco/test/html/badges
+      - name: Prepare directory for GitHub Pages
+        run: |
+          mkdir -p site/reports/jacoco
+          mkdir -p site/reports/owasp
+          cp -r build/reports/jacoco/test/html/* site/reports/jacoco/
+          cp reports/dependency-check-report.html site/reports/owasp/
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts
+          path: build
+
+      - name: Download Gitleaks badge
+        if: always()
+        uses: actions/download-artifact@v4
+        with:
+          name: gitleaks-badge
+          path: .badges
+
+      - name: Copy the Gitleaks badge
+        if: always()
+        run: |
+          mkdir -p site/badges
+          cp .badges/gitleaks-badge.json site/badges/
+
+      - name: Publish coverage report to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: site
+
+
+          
+  sonarqube-analysis:
+    runs-on: ubuntu-latest
+    needs: build-code-gradle
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
+          path: build
+      - name: Check classes directory
+        run: |
+          ls -lRth ${{ github.workspace }}/build/classes/*
+      - name: Analyse SonarQube
+        uses: SonarSource/sonarqube-scan-action@v5.2.0
+        with:
+          args: >
+            -Dsonar.organization=audirline
+            -Dsonar.projectKey=audirline_spring-music-sqldb
+            -Dsonar.java.binaries=build/classes
+            -Dsonar.sonar.java.libraries=build/libs
+            -Dsonar.coverage.jacoco.xmlReportPaths=build/reports/jacoco/test/jacocoTestReport.xml
+        env:
+          SONAR_TOKEN: '${{ secrets.SONAR_TOKEN }}'
