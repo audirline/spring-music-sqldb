@@ -199,3 +199,39 @@ jobs:
             spring-music-dev/spring-thanh/${{ github.sha }}/ \
             --build-name=spring-music-sqldb \
             --build-number=${{ github.run_number }}
+
+  Deploy-to-dev-environment:
+     runs-on: ubuntu-latest
+     needs: Push-to-artifactory
+     steps:
+       - name: Deploy snapshot artifact to dev environment
+         run: echo "Deployment to PaaS non prod successfull!!"
+
+  Tests-on-dev-environment:
+    runs-on: ubuntu-latest
+    needs: Deploy-to-dev-environment
+    steps:
+       - name: Deploy snapshot artifact to dev environment
+         run: echo "All the tests have passed!!!"
+  
+  Promote-snapshot-to-release:
+    runs-on: ubuntu-latest
+    needs: Tests-on-dev-environment
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup JFrog CLI
+        uses: jfrog/setup-jfrog-cli@v4.5.11
+      - name: Configure JFrog CLI
+        run: |
+          jfrog config add artifactory-server --url=$ARTIFACTORY_URL --user=$ARTIFACTORY_USER --password=$ARTIFACTORY_PASSWORD --interactive=false
+        env:
+          ARTIFACTORY_URL: ${{ secrets.ARTIFACTORY_URL }}
+          ARTIFACTORY_USER: ${{ secrets.ARTIFACTORY_USER }}
+          ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+      - name: Promote snapshot to release
+        run: |
+          jfrog rt copy \
+            spring-music-dev/spring-thanh/${{ github.sha }}/* \
+            spring-music-PROD/spring-thanh/${{ github.ref_name }}/
+         
+          
