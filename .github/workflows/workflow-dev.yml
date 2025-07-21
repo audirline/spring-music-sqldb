@@ -192,7 +192,7 @@ jobs:
           name: build-artifacts
           path: build
 
-      - name: Push JAR to Artifactory test 2
+      - name: Push JAR to Artifactory test 3
         run: |
           jfrog rt upload \
             build/libs/*.jar \
