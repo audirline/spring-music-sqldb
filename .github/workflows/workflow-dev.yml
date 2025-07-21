@@ -232,6 +232,6 @@ jobs:
         run: |
           jfrog rt copy \
             spring-music-dev/spring-thanh/${{ github.sha }}/* \
-            spring-music-PROD/spring-thanh/${{ github.ref_name }}/
+            spring-music-prod/spring-thanh/${{ github.ref_name }}/
          
           
