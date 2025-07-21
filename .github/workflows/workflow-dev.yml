@@ -196,6 +196,6 @@ jobs:
         run: |
           jfrog rt upload \
             build/libs/*.jar \
-            my-repo-snapshots/my-app/${{ github.sha }}/ \
+            spring-music-dev/spring-thanh/${{ github.sha }}/ \
             --build-name=spring-music-sqldb \
             --build-number=${{ github.run_number }}
