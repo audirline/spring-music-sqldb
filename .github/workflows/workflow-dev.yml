@@ -228,7 +228,7 @@ jobs:
       - name: Download-snapshot-from-Artifactory
         run: |
           mkdir -p /tmp/from_artifactory
-          jfrog rt dl spring-music-dev/spring-thanh/ --include-dirs
+          jfrog rt dl spring-music-dev/spring-thanh/ --include-dirs --sort-by=created --sort-order=desc --limit=1
           ls -lrth
           ls -lRth
           cp spring-music-sqldb-* /tmp/from_artifactory/
