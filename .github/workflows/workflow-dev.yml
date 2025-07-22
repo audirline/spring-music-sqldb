@@ -228,10 +228,11 @@ jobs:
       - name: Download-snapshot-from-Artifactory
         run: |
           mkdir -p /tmp/from_artifactory
-          jfrog rt dl spring-music-dev/spring-thanh/ --include-dirs --sort-by=created --sort-order=desc --limit=1
-          ls -lrth
-          ls -lRth
-          cp spring-music-sqldb-* /tmp/from_artifactory/
+          jfrog rt s "spring-music-dev/spring-thanh/*.jar" --sort-by=created --sort-order=desc --limit=1 > latest.json
+          LATEST_PATH=$(jq -r '.[0].path + "/" + .[0].name' latest.json)
+          echo "Latest artifact path: $LATEST_PATH"
+          jfrog rt dl "$LATEST_PATH" /tmp/from_artifactory/ --flat
+         
       - name: Deploy to Azure WebApp
         uses: azure/webapps-deploy@v3
         env:
