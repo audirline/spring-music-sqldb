@@ -51,7 +51,7 @@ jobs:
           name: gitleaks-badge
           path: .badges/gitleaks-badge.json
   build-code-gradle:
-    needs: Check-if-code-contains-sensitive-infos
+    needs: Check-code-quality-style
     runs-on: ubuntu-latest
     env:
       DB_USERNAME: '${{ secrets.DB_USERNAME }}'
