@@ -180,15 +180,10 @@ jobs:
           version: latest
       - name: Configure JFrog CLI
         run: |
-
           jfrog config add artifactory-server \
-
             --url=$ARTIFACTORY_URL \
-
             --user=$ARTIFACTORY_USER \
-
             --password=$ARTIFACTORY_PASSWORD \
-
             --interactive=false
         env:
           ARTIFACTORY_URL: '${{ secrets.ARTIFACTORY_URL }}'
@@ -201,15 +196,10 @@ jobs:
           path: build
       - name: Push JAR to Artifactory test 5
         run: |
-
           jfrog rt upload \
-
             build/libs/*.jar \
-
             spring-music-dev/spring-thanh/${{ github.sha }}/ \
-
             --build-name=spring-music-sqldb \
-
             --build-number=${{ github.run_number }}
   Deploy-to-dev-environment-aPaas:
     runs-on: ubuntu-latest
@@ -221,15 +211,10 @@ jobs:
           java-version: '${{ env.JAVA_VERSION }}'
       - name: Configure JFrog CLI
         run: |
-
           jfrog config add artifactory-server \
-
             --url=$ARTIFACTORY_URL \
-
             --user=$ARTIFACTORY_USER \
-
             --password=$ARTIFACTORY_PASSWORD \
-
             --interactive=false
         env:
           ARTIFACTORY_URL: '${{ secrets.ARTIFACTORY_URL }}'
@@ -237,11 +222,8 @@ jobs:
           ARTIFACTORY_PASSWORD: '${{ secrets.ARTIFACTORY_PASSWORD }}'
       - name: Download-snapshot-from-Artifactory
         run: |
-
           mkdir -p /tmp/from_artifactory
-
           jfrog rt dl spring-music-dev/spring-thanh/ --include-dirs
-
           cp spring-music-sqldb /tmp/from_artifactory/
       - name: Deploy to Azure WebApp
         uses: azure/webapps-deploy@v3
@@ -272,7 +254,6 @@ jobs:
         uses: jfrog/setup-jfrog-cli@v4.5.11
       - name: Configure JFrog CLI
         run: >
-
           jfrog config add artifactory-server --url=$ARTIFACTORY_URL
           --user=$ARTIFACTORY_USER --password=$ARTIFACTORY_PASSWORD
           --interactive=false
