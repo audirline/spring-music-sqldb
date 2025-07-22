@@ -232,7 +232,10 @@ jobs:
           LATEST_PATH=$(jq -r '.[0].path + "/" + .[0].name' latest.json)
           echo "Latest artifact path: $LATEST_PATH"
           jfrog rt dl "$LATEST_PATH" /tmp/from_artifactory/ --flat
-         
+
+
+      - name: check artifact
+        run: ls -lrth /tmp/from_artifactory/
       - name: Deploy to Azure WebApp
         uses: azure/webapps-deploy@v3
         env:
@@ -244,7 +247,7 @@ jobs:
           app-name: '${{ env.AZURE_WEBAPP_NAME }}'
           publish-profile: '${{ env.AZURE_WEBAPP_PUBLISH_PROFILE }}'
           package: '/tmp/from_artifactory/*.jar'
-          run: echo "Deployment to aPaaS non-prod successfull!!!"
+       
   Tests-on-dev-environment:
     runs-on: ubuntu-latest
     needs: Deploy-to-dev-environment-aPaas
