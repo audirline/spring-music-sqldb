@@ -274,9 +274,6 @@ jobs:
           ARTIFACTORY_PASSWORD: '${{ secrets.ARTIFACTORY_PASSWORD }}'
       - name: Promote snapshot to release
         run: |
-
-          jfrog rt copy \
-
-            spring-music-dev/spring-thanh/${{ github.sha }}/* \
-
-            spring-music-prod/spring-thanh/prod/
+         jfrog rt copy \
+         spring-music-dev/spring-thanh/${{ github.sha }}/* \
+         spring-music-prod/spring-thanh/prod/
