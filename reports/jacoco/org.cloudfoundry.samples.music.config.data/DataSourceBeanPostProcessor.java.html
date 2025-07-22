@@ -19,8 +19,8 @@ import java.util.Map;
 
 @Component
 @ConditionalOnProperty(name = &quot;spring.datasource.dataSourceProperties.ColumnEncryptionSetting&quot;, havingValue = &quot;Enabled&quot;, matchIfMissing = false)
-<span class="nc" id="L22">public class DataSourceBeanPostProcessor implements BeanPostProcessor {</span>
-<span class="nc" id="L23">    private static final Logger logger = LoggerFactory.getLogger(DataSourceBeanPostProcessor.class);</span>
+<span class="fc" id="L22">public class DataSourceBeanPostProcessor implements BeanPostProcessor {</span>
+<span class="fc" id="L23">    private static final Logger logger = LoggerFactory.getLogger(DataSourceBeanPostProcessor.class);</span>
 
     @Value(&quot;${microsoft.vault.clientId}&quot;)
     private String clientId;
@@ -29,31 +29,31 @@ import java.util.Map;
 
     @Override
     public Object postProcessBeforeInitialization(final Object bean, final String beanName) throws BeansException {
-<span class="nc" id="L32">        return bean;</span>
+<span class="fc" id="L32">        return bean;</span>
     }
 
     @Override
     public Object postProcessAfterInitialization(final Object bean, final String beanName) throws BeansException {
-<span class="nc bnc" id="L37" title="All 2 branches missed.">        if (bean instanceof DataSource) {</span>
-<span class="nc bnc" id="L38" title="All 8 branches missed.">            if ( clientId ==null || clientId.isEmpty() || clientSecret == null || clientSecret.isEmpty() )</span>
+<span class="fc bfc" id="L37" title="All 2 branches covered.">        if (bean instanceof DataSource) {</span>
+<span class="pc bpc" id="L38" title="4 of 8 branches missed.">            if ( clientId ==null || clientId.isEmpty() || clientSecret == null || clientSecret.isEmpty() )</span>
 <span class="nc" id="L39">                throw new FatalBeanException(&quot;AlwaysEncrypted feature requires Service Principal that has access to Vaulr - setup clientId and ClientSecret&quot;);</span>
 
             try {
-<span class="nc" id="L42">                logger.info (&quot;initializing DataSource AlwaysEncryption Vault provider&quot;);</span>
-<span class="nc" id="L43">                SQLServerColumnEncryptionAzureKeyVaultProvider akvProvider =</span>
+<span class="fc" id="L42">                logger.info (&quot;initializing DataSource AlwaysEncryption Vault provider&quot;);</span>
+<span class="fc" id="L43">                SQLServerColumnEncryptionAzureKeyVaultProvider akvProvider =</span>
                         new SQLServerColumnEncryptionAzureKeyVaultProvider(clientId, clientSecret);
 
-<span class="nc" id="L46">                Map&lt;String, SQLServerColumnEncryptionKeyStoreProvider&gt; keyStoreMap = new HashMap&lt;String, SQLServerColumnEncryptionKeyStoreProvider&gt;();</span>
-<span class="nc" id="L47">                keyStoreMap.put(akvProvider.getName(), akvProvider);</span>
+<span class="fc" id="L46">                Map&lt;String, SQLServerColumnEncryptionKeyStoreProvider&gt; keyStoreMap = new HashMap&lt;String, SQLServerColumnEncryptionKeyStoreProvider&gt;();</span>
+<span class="fc" id="L47">                keyStoreMap.put(akvProvider.getName(), akvProvider);</span>
 
-<span class="nc" id="L49">                SQLServerConnection.registerColumnEncryptionKeyStoreProviders(keyStoreMap);</span>
+<span class="fc" id="L49">                SQLServerConnection.registerColumnEncryptionKeyStoreProviders(keyStoreMap);</span>
 
 <span class="nc" id="L51">            } catch (SQLException ex) {</span>
 <span class="nc" id="L52">                logger.error(ex.getMessage());</span>
 <span class="nc" id="L53">                throw new FatalBeanException(ex.getMessage());</span>
-<span class="nc" id="L54">            }</span>
+<span class="fc" id="L54">            }</span>
         }
-<span class="nc" id="L56">        return bean;</span>
+<span class="fc" id="L56">        return bean;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>
