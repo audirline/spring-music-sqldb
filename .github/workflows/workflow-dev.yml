@@ -194,7 +194,7 @@ jobs:
         with:
           name: build-artifacts
           path: build
-      - name: Push JAR to Artifactory test 5
+      - name: Push JAR to Artifactory
         run: |
           jfrog rt upload \
             build/libs/*.jar \
@@ -220,6 +220,7 @@ jobs:
           ARTIFACTORY_URL: '${{ secrets.ARTIFACTORY_URL }}'
           ARTIFACTORY_USER: '${{ secrets.ARTIFACTORY_USER }}'
           ARTIFACTORY_PASSWORD: '${{ secrets.ARTIFACTORY_PASSWORD }}'
+          JAVA_VERSION: '8'
       - name: Download-snapshot-from-Artifactory
         run: |
           mkdir -p /tmp/from_artifactory
