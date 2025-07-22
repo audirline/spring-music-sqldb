@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: sqlserver-local
   jpa:
     generate-ddl: true
 
