@@ -30,8 +30,8 @@ describe('Spring Music App', () => {
 
 
 it('modifie le nom d’un album', () => {
-  const oldName = 'Pet Sounds';
-  const newName = 'Pet Sounds Remastered';
+  const oldName = 'Everything';
+  const newName = 'Everything Modified';
 
   cy.visit('/');
 
