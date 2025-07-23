@@ -20,7 +20,7 @@ jobs:
       - name: Install dependencies for Cypress
         run: npm install cypress wait-on
 
-      - name: Wait for app to be up
+      - name: Wait for app to be up1
         run: npx wait-on https://spring-music-hgckhuf3gza0bvb2.canadacentral-01.azurewebsites.net/
 
       - name: Run Cypress tests
