@@ -9,13 +9,13 @@
 }
 
 .navbar .container {
-    background-color: #007E3E; /* vert Desjardins */
-    background-image: -moz-linear-gradient(top, #007E3E, #005a2a);
-    background-image: -ms-linear-gradient(top, #007E3E, #005a2a);
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#007E3E), to(#005a2a));
-    background-image: -webkit-linear-gradient(top, #007E3E, #005a2a);
-    background-image: -o-linear-gradient(top, #007E3E, #005a2a);
-    background-image: linear-gradient(to bottom, #007E3E, #005a2a);
+    background-color: #FF6600; /* orange vif */
+    background-image: -moz-linear-gradient(top, #FF6600, #cc5200);
+    background-image: -ms-linear-gradient(top, #FF6600, #cc5200);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#FF6600), to(#cc5200));
+    background-image: -webkit-linear-gradient(top, #FF6600, #cc5200);
+    background-image: -o-linear-gradient(top, #FF6600, #cc5200);
+    background-image: linear-gradient(to bottom, #FF6600, #cc5200);
 }
 
 .navbar .navbar-brand {
