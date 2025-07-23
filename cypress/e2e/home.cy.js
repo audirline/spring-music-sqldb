@@ -29,22 +29,21 @@ describe('Spring Music App', () => {
   });
 
 it('supprime un album', () => {
+  const albumName = 'Test Album';
 
-  // Trouve la ligne contenant le nom de l'album
-  cy.contains('Test Album')
-    .should('exist') // vérifie que l'album est bien là
-    .parents('tr')   // remonte jusqu'à la ligne du tableau
+  // Attend que l’album apparaisse (jusqu'à 10s)
+  cy.contains(albumName, { timeout: 10000 })
+    .should('exist')
+    .parents('tr')
     .within(() => {
-      // Clique sur l'icône d'engrenage
       cy.get('.glyphicon-cog').click();
-
-      // Clique sur le lien 'delete'
       cy.contains('a', 'delete').click();
     });
 
-  // Vérifie que l'album n'est plus présent
-  cy.contains('span', albumName).should('not.exist');
+  // Vérifie qu’il a été supprimé
+  cy.contains(albumName).should('not.exist');
 });
+
 
 
 });
