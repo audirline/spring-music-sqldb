@@ -1,8 +1,9 @@
 name: Build and code check
 'on':
-  push:
-    branches:
-      - dev
+  workflow_dispatch:
+  #push:
+    #branches:
+      #- dev
 jobs:
   Check-code-quality-style:
     runs-on: ubuntu-latest
