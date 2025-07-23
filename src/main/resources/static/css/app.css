@@ -1,7 +1,7 @@
 #body {
     padding-top: 10px;
-    background: linear-gradient(to right, #006644, #00cc99); /* Vert Desjardins */
-    color: white;
+    background: white;
+    color: black;
     min-height: 100vh;
 }
 
@@ -9,22 +9,22 @@
     background-color: white;
     border: 0;
     margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .navbar .container {
-    background-color: #006644;
-    background-image: linear-gradient(to bottom, #006644, #004d33); /* vert foncé */
+    background-color: white;
 }
 
 .navbar .navbar-brand {
-    color: white;
+    color: #006644;
     font-weight: bold;
     display: flex;
     align-items: center;
 }
 
 .navbar .navbar-brand:hover {
-    color: white;
+    color: #004d33;
 }
 
 .navbar .navbar-brand img {
@@ -33,9 +33,15 @@
 }
 
 .btn {
-    background-color: white;
+    background-color: #006644;
+    color: white;
+    border: none;
+}
+
+.btn:hover {
+    background-color: #004d33;
 }
 
 .icon-white {
-    color: white;
+    color: #006644;
 }
