@@ -28,28 +28,22 @@ describe('Spring Music App', () => {
     cy.contains('Everything').should('exist');
   });
 
-describe('Suppression d’un album', () => {
   it('supprime un album nommé "Test Album"', () => {
-    const albumName = 'Pet Sounds';
+    const albumName = 'Test Album';
 
-    // Aller sur l’application
-    cy.visit('https://spring-music-hgckhuf3gza0bvb2.canadacentral-01.azurewebsites.net');
+    cy.visit(baseUrl);
 
-    // Vérifie que l’album existe et clique sur supprimer
-    cy.contains('td', albumName, { timeout: 10000 })
-      .should('exist')
-      .parent('tr')
+    // On trouve le <span> contenant le nom, on remonte au tr parent, puis on clique sur roue puis delete
+    cy.contains('span.ng-binding', albumName)
+      .should('be.visible')
+      .parents('tr')
       .within(() => {
         cy.get('.glyphicon-cog').click();
         cy.contains('a', 'delete').click();
       });
 
-    // Vérifie qu’il a bien été supprimé
-    cy.contains('td', albumName).should('not.exist');
+    // Vérifie que l'album n'existe plus
+    cy.contains('span.ng-binding', albumName).should('not.exist');
   });
-});
-
-
-
 
 });
