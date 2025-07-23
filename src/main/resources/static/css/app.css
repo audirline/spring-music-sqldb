@@ -6,25 +6,25 @@
 }
 
 .navbar {
-    background-color: #FFFFFF;
+    background-color: #0072ce; /* bleu Desjardins vif */
     border: 0;
     margin-bottom: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .navbar .container {
-    background-color: #FFFFFF;
+    background-color: transparent;
 }
 
 .navbar .navbar-brand {
-    color: #008444;
+    color: #FFFFFF; /* texte blanc */
     font-weight: bold;
     display: flex;
     align-items: center;
 }
 
 .navbar .navbar-brand:hover {
-    color: #005E3C;
+    color: #cce6ff; /* bleu clair au hover */
 }
 
 .navbar .navbar-brand img {
@@ -44,5 +44,30 @@
 }
 
 .icon-white {
-    color: #008444;
+    color: #FFFFFF; /* icônes blanches dans navbar */
+}
+
+/* liens de navigation à droite en blanc */
+.navbar .nav > li > a {
+    color: #FFFFFF;
+}
+
+.navbar .nav > li > a:hover,
+.navbar .nav > li > a:focus {
+    color: #cce6ff;
+}
+
+/* dropdown menu */
+.navbar .dropdown-menu {
+    background-color: #005a9c;
+    border: none;
+}
+
+.navbar .dropdown-menu > li > a {
+    color: #FFFFFF;
+}
+
+.navbar .dropdown-menu > li > a:hover {
+    background-color: #004a7c;
+    color: #cce6ff;
 }
