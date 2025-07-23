@@ -10,11 +10,6 @@
 
 .navbar .container {
     background-color: #FF6600; /* orange vif */
-    background-image: -moz-linear-gradient(top, #FF6600, #cc5200);
-    background-image: -ms-linear-gradient(top, #FF6600, #cc5200);
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#FF6600), to(#cc5200));
-    background-image: -webkit-linear-gradient(top, #FF6600, #cc5200);
-    background-image: -o-linear-gradient(top, #FF6600, #cc5200);
     background-image: linear-gradient(to bottom, #FF6600, #cc5200);
 }
 
@@ -32,4 +27,21 @@
 
 .icon-white {
     color: white;
+}
+
+/* Style pour logo Desjardins */
+.navbar-header {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-logo-link {
+    margin-right: 10px;
+}
+
+.navbar-logo {
+    height: 30px;
+    width: auto;
+    display: block;
+    border-radius: 4px;
 }
