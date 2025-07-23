@@ -30,7 +30,7 @@ describe('Spring Music App', () => {
 
 describe('Suppression d’un album', () => {
   it('supprime un album nommé "Test Album"', () => {
-    const albumName = 'Test Album';
+    const albumName = 'Pet Sounds';
 
     // Aller sur l’application
     cy.visit('https://spring-music-hgckhuf3gza0bvb2.canadacentral-01.azurewebsites.net');
