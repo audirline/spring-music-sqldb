@@ -17,6 +17,25 @@ describe('Spring Music App', () => {
     cy.contains('Test Album').should('exist');
   });
 
+it('modifie le nom d’un album', () => {
+  const oldName = 'Test Album';
+  const newName = 'Test Album Modified';
+  cy.visit('/');
+  // Trouver un élément visible contenant "Test Album"
+  cy.contains('span.ng-binding', oldName)
+    .filter(':visible') // Sélectionne uniquement les éléments visibles
+    .first() // Prend le premier
+    .click({ force: true }) // 1er clic
+    .click({ force: true }); // 2e clic pour activer le champ
+  // Champ input visible pour édition
+  cy.get('input[name="title"]:visible')
+    .clear()
+    .type(`${newName}{enter}`);
+  // Vérifie que le nouveau nom apparaît
+  cy.contains('span.ng-binding', newName).should('exist');
+});
+
+  
   it('ajoute un autre album "Everything"', () => {
     cy.visit(baseUrl);
     cy.get('a[ng-click="addAlbum()"]').click();
@@ -29,34 +48,26 @@ describe('Spring Music App', () => {
   });
 
 
-it('modifie le nom d’un album', () => {
-  const oldName = 'Everything';
-  const newName = 'Everything Modified';
-
+it('modifie le nom d’un album Everything', () => {
+  const oldName2 = 'Everything';
+  const newName2 = 'Everything Modified';
   cy.visit('/');
-
   // Trouver un élément visible contenant "Everything"
-  cy.contains('span.ng-binding', oldName)
+  cy.contains('span.ng-binding', oldName2)
     .filter(':visible') // Sélectionne uniquement les éléments visibles
     .first() // Prend le premier
     .click({ force: true }) // 1er clic
     .click({ force: true }); // 2e clic pour activer le champ
-
   // Champ input visible pour édition
   cy.get('input[name="title"]:visible')
     .clear()
-    .type(`${newName}{enter}`);
-
+    .type(`${newName2}{enter}`);
   // Vérifie que le nouveau nom apparaît
-  cy.contains('span.ng-binding', newName).should('exist');
+  cy.contains('span.ng-binding', newName2).should('exist');
 });
 
 
-
-
-
-
- it('supprime un album nommé "Test Album"', () => {
+ it('supprime un album nommé "Test Album Modified"', () => {
   const albumName = 'Test Album';
   cy.visit(baseUrl);
   // Trouver le span qui contient le nom de l'album
@@ -75,7 +86,7 @@ it('modifie le nom d’un album', () => {
   cy.contains(albumName).should('not.exist');
 });
 
- it('supprime un album nommé "Everything"', () => {
+ it('supprime un album nommé "Everything Modified"', () => {
   const albumName2 = 'Everything Modified';
   cy.visit(baseUrl);
   // Trouver le span qui contient le nom de l'album
