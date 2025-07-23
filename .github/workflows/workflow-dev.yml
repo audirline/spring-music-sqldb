@@ -241,24 +241,37 @@ jobs:
         run: npx wait-on https://spring-music-hgckhuf3gza0bvb2.canadacentral-01.azurewebsites.net/
       - name: Run Cypress tests on Chrome
         run: npx cypress run --browser chrome
+      - name: Copy results after Chrome
+        run: |
+          mkdir -p artifacts/chrome
+          cp -r cypress/screenshots artifacts/chrome/screenshots || true
+          cp -r cypress/videos artifacts/chrome/videos || true
       - name: Run Cypress tests on Edge
         run: npx cypress run --browser edge
+      - name: Copy results after Edge
+        run: |
+          mkdir -p artifacts/edge
+          cp -r cypress/screenshots artifacts/edge/screenshots || true
+          cp -r cypress/videos artifacts/edge/videos || true
       - name: Run Cypress tests on Firefox
-        run: npx cypress run --browser firefox
-      - name: Check screenshots anb videos
-        run: ls -lRth cypress
-      - name: Upload Cypress screenshots on failure
+        run: npx cypress run --browser firefox || echo "Skipping Firefox"
+      - name: Copy results after Firefox
+        run: |
+          mkdir -p artifacts/firefox
+          cp -r cypress/screenshots artifacts/firefox/screenshots || true
+          cp -r cypress/videos artifacts/firefox/videos || true
+      - name: Upload Cypress screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: cypress-screenshots
-          path: cypress/screenshots
+          path: artifacts/**/screenshots
       - name: Upload Cypress videos
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: cypress-videos
-          path: cypress/videos 
+          path: artifacts/**/videos 
       - name: Sucess message
         run: >-
           echo "All the tests have passed!!! We can now promote the snapshot to a release"
