@@ -1,35 +1,41 @@
 #body {
     padding-top: 10px;
+    background: linear-gradient(135deg, #ff0066, #cc0033); /* rouge rose pétant */
+    color: white;
+    min-height: 100vh;
 }
 
+/* Navbar */
 .navbar {
-    background-color: white;
+    background-color: transparent;
     border: 0;
     margin-bottom: 20px;
 }
 
 .navbar .container {
-    background-color: #FF6600; /* orange vif */
-    background-image: linear-gradient(to bottom, #FF6600, #cc5200);
+    background-color: rgba(0, 0, 0, 0.2); /* semi-transparent for contrast */
+    border-radius: 8px;
 }
 
+/* Texte de la barre */
 .navbar .navbar-brand {
     color: white;
 }
 
 .navbar .navbar-brand:hover {
-    color: white;
+    color: #ffccff;
 }
 
 .btn {
     background-color: white;
+    color: #cc0033;
 }
 
 .icon-white {
     color: white;
 }
 
-/* Style pour logo Desjardins */
+/* Logo Desjardins */
 .navbar-header {
     display: flex;
     align-items: center;
