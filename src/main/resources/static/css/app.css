@@ -9,13 +9,8 @@
 }
 
 .navbar .container {
-    background-color: #008a00;
-    background-image: -moz-linear-gradient(top, #008a00, #006b00);
-    background-image: -ms-linear-gradient(top, #008a00, #006b00);
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#008a00), to(#006b00));
-    background-image: -webkit-linear-gradient(top, #008a00, #006b00);
-    background-image: -o-linear-gradient(top, #008a00, #006b00);
-    background-image: linear-gradient(top, #008a00, #006b00);
+    background-color: #FF6600; /* orange vif */
+    background-image: linear-gradient(to bottom, #FF6600, #cc5200);
 }
 
 .navbar .navbar-brand {
@@ -32,4 +27,21 @@
 
 .icon-white {
     color: white;
+}
+
+/* Style pour logo Desjardins */
+.navbar-header {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-logo-link {
+    margin-right: 10px;
+}
+
+.navbar-logo {
+    height: 30px;
+    width: auto;
+    display: block;
+    border-radius: 4px;
 }
