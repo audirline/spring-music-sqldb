@@ -28,6 +28,34 @@ describe('Spring Music App', () => {
     cy.contains('Everything').should('exist');
   });
 
+
+  it('modifie le nom d’un album', () => {
+  const oldName = 'Everything';
+  const newName = 'Everything Modified';
+
+  cy.visit(baseUrl);
+
+  // Trouver le span contenant le nom actuel et cliquer dessus pour activer l'édition
+  cy.contains('span.ng-binding', oldName)
+    .should('be.visible')
+    .click();
+
+  // Saisir le nouveau titre dans le champ input
+  cy.get('input[name="title"]')
+    .clear()
+    .type(newName);
+
+  // Cliquer sur le bouton valider (icône check)
+  cy.get('span.glyphicon-ok').click();
+
+  // Vérifier que l'ancien nom n'existe plus
+  cy.contains(oldName).should('not.exist');
+
+  // Vérifier que le nouveau nom est visible
+  cy.contains(newName).should('exist');
+});
+
+
  it('supprime un album nommé "Test Album"', () => {
   const albumName = 'Test Album';
   cy.visit(baseUrl);
@@ -48,7 +76,7 @@ describe('Spring Music App', () => {
 });
 
  it('supprime un album nommé "Everything"', () => {
-  const albumName2 = 'Everything';
+  const albumName2 = 'Everything Modified';
   cy.visit(baseUrl);
   // Trouver le span qui contient le nom de l'album
   cy.contains('span.ng-binding', albumName2)
