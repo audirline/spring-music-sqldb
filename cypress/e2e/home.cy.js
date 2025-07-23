@@ -17,10 +17,27 @@ it('adds an album', () => {
   cy.contains('Test Album').should('exist')
 })
 
+it('adds an album', () => {
+  cy.visit('https://spring-music-hgckhuf3gza0bvb2.canadacentral-01.azurewebsites.net/')
+  cy.get('a[ng-click="addAlbum()"]').click()
+  cy.get('#title').type('Everything')
+  cy.get('#artist').type('Avril Lavigne')
+  cy.get('#releaseYear').type('2012')
+  cy.get('#genre').type('Pop')
+  cy.get('button[ng-click="ok()"]').click()
+  cy.contains('Everything').should('exist')
+})
 
-  it('supprime un album', () => {
-    cy.visit(baseUrl);
-    cy.contains('Nouvel Album').parent().contains('Delete').click();
-    cy.contains('Nouvel Album').should('not.exist');
-  });
+
+it('delete an album', () => {
+  cy.visit('https://spring-music-hgckhuf3gza0bvb2.canadacentral-01.azurewebsites.net/')
+  cy.contains('tr', 'Test Album').within(() => {
+    cy.get('.glyphicon-cog').click()
+    cy.contains('delete').click()
+  })
+  // Vérifie que l’album n’est plus dans la liste
+  cy.contains('Test Album').should('not.exist')
+})
+
+
 });
