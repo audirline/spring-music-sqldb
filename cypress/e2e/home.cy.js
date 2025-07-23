@@ -28,22 +28,27 @@ describe('Spring Music App', () => {
     cy.contains('Everything').should('exist');
   });
 
-  it('supprime un album nommé "Test Album"', () => {
-    const albumName = 'Test Album';
+ it('supprime un album nommé "Test Album"', () => {
+  const albumName = 'Test Album';
 
-    cy.visit(baseUrl);
+  cy.visit(baseUrl);
 
-    // On trouve le <span> contenant le nom, on remonte au tr parent, puis on clique sur roue puis delete
-    cy.contains('span.ng-binding', albumName)
-      .should('be.visible')
-      .parents('tr')
-      .within(() => {
-        cy.get('.glyphicon-cog').click();
-        cy.contains('a', 'delete').click();
-      });
+  // Trouver le span qui contient le nom de l'album
+  cy.contains('span.ng-binding', albumName)
+    .should('be.visible')
+    // remonte jusqu'à un parent qui contient tout l'album, par exemple le 4e ou 5e parent div (à ajuster)
+    .parents('div.row.multi-columns-row > div > div') 
+    .first() 
+    .within(() => {
+      // Clique sur la roue dentée pour options
+      cy.get('.glyphicon-cog').click();
+      // Clique sur "delete"
+      cy.contains('a', 'delete').click();
+    });
 
-    // Vérifie que l'album n'existe plus
-    cy.contains('span.ng-binding', albumName).should('not.exist');
-  });
+  // Vérifie que l’album n’est plus visible
+  cy.contains(albumName).should('not.exist');
+});
+
 
 });
