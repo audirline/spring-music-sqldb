@@ -32,17 +32,11 @@ jobs:
       - name: Générer le badge Gitleaks
         if: always()
         run: |
-
           mkdir -p .badges
-
           if [ "${{ job.status }}" == "success" ]; then
-
             echo '{"schemaVersion":1,"label":"Gitleaks","message":"passed","color":"brightgreen"}' > .badges/gitleaks-badge.json
-
           else
-
             echo '{"schemaVersion":1,"label":"Gitleaks","message":"failed","color":"red"}' > .badges/gitleaks-badge.json
-
           fi
       - name: Upload Gitleaks badge
         if: always()
@@ -96,26 +90,20 @@ jobs:
           path: .
           format: HTML
           args: |
-
             --failOnCVSS 7
             --enableRetired
       - name: Check owasp report location
         run: 'ls -lRth ${{github.workspace}}/reports'
       - name: Check if the app is build and present
         run: |
-
           ls ${{ github.workspace }}/build/libs
       - name: Check the badges
         run: ls -lRth build/reports/jacoco/test/html/badges
       - name: Prepare directory for GitHub Pages
         run: |
-
           mkdir -p site/reports/jacoco
-
           mkdir -p site/reports/owasp
-
           cp -r build/reports/jacoco/test/html/* site/reports/jacoco/
-
           cp reports/dependency-check-report.html site/reports/owasp/
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
@@ -131,9 +119,7 @@ jobs:
       - name: Copy the Gitleaks badge
         if: always()
         run: |
-
           mkdir -p site/badges
-
           cp .badges/gitleaks-badge.json site/badges/
       - name: Publish coverage report to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
@@ -152,21 +138,15 @@ jobs:
           path: build
       - name: Check classes directory
         run: |
-
           ls -lRth ${{ github.workspace }}/build/classes/*
       - name: Analyse SonarQube
         uses: SonarSource/sonarqube-scan-action@v5.2.0
         with:
           args: >
-
             -Dsonar.organization=audirline
-
             -Dsonar.projectKey=audirline_spring-music-sqldb
-
             -Dsonar.java.binaries=build/classes
-
             -Dsonar.sonar.java.libraries=build/libs
-
             -Dsonar.coverage.jacoco.xmlReportPaths=build/reports/jacoco/test/jacocoTestReport.xml
         env:
           SONAR_TOKEN: '${{ secrets.SONAR_TOKEN }}'
@@ -223,8 +203,7 @@ jobs:
         env:
           ARTIFACTORY_URL: '${{ secrets.ARTIFACTORY_URL }}'
           ARTIFACTORY_USER: '${{ secrets.ARTIFACTORY_USER }}'
-          ARTIFACTORY_PASSWORD: '${{ secrets.ARTIFACTORY_PASSWORD }}'
-          
+          ARTIFACTORY_PASSWORD: '${{ secrets.ARTIFACTORY_PASSWORD }}'      
       - name: Download-snapshot-from-Artifactory
         run: |
           mkdir -p /tmp/from_artifactory
@@ -232,8 +211,6 @@ jobs:
           LATEST_PATH=$(jq -r '.[0].repo + "/" + .[0].path + "/" + .[0].name' latest.json | sed 's:/$::')
           echo "Latest artifact path: $LATEST_PATH"
           jfrog rt dl "$LATEST_PATH" /tmp/from_artifactory/ --flat
-
-
       - name: check artifact
         run: ls -lrth /tmp/from_artifactory/
       - name: Deploy to Azure WebApp
@@ -246,16 +223,14 @@ jobs:
         with:
           app-name: '${{ env.AZURE_WEBAPP_NAME }}'
           publish-profile: '${{ env.AZURE_WEBAPP_PUBLISH_PROFILE }}'
-          package: '/tmp/from_artifactory/*.jar'
-       
+          package: '/tmp/from_artifactory/*.jar'     
   Tests-on-dev-environment:
     runs-on: ubuntu-latest
     needs: Deploy-to-dev-environment-aPaas
     steps:
       - name: Deploy snapshot artifact to dev environment
         run: >-
-          echo "All the tests have passed!!! We can now promote the snapshot to
-          a release"
+          echo "All the tests have passed!!! We can now promote the snapshot to a release"
   Promote-snapshot-to-release:
     runs-on: ubuntu-latest
     needs: Tests-on-dev-environment
