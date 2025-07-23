@@ -17,7 +17,7 @@ describe('Spring Music App', () => {
     cy.contains('Test Album').should('exist');
   });
 
-it('modifie le nom d’un album', () => {
+it('modifie le nom d’un album "Test Album"', () => {
   const oldName = 'Test Album';
   const newName = 'Test Album Modified';
   cy.visit('/');
