@@ -1,6 +1,0 @@
-name: Build and code check
-'on':
-  workflow_dispatch:
-  #push:
-    #branches:
-      #- dev

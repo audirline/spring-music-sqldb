@@ -1,0 +1,31 @@
+name: Tests tests
+'on':
+  #workflow_dispatch:
+  push:
+    branches:
+      - dev
+
+jobs:
+  Tests-on-dev-environment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies for Cypress
+        run: npm install cypress wait-on
+
+      - name: Wait for app to be up
+        run: npx wait-on https://spring-music-hgckhuf3gza0bvb2.canadacentral-01.azurewebsites.net/
+
+      - name: Run Cypress tests
+        run: npx cypress run
+    
+      - name: Sucess message
+        run: >-
+          echo "All the tests have passed!!! We can now promote the snapshot to a release"
