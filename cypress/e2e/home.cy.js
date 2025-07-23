@@ -6,16 +6,17 @@ describe('Spring Music App', () => {
     cy.contains('Spring Music').should('exist');
   });
 
-  it('add an album', () => {
-    cy.visit(baseUrl);
-    cy.contains('add an album').click();
-    cy.get('input[name="Album Title"]').type('Test Album');
-    cy.get('input[name="Artist"]').type('Test Artist');
-    cy.get('input[name="Release Year"]').type('2024');
-    cy.get('input[name="Genre"]').type('Test Genre');
-    cy.get('OK').submit();
-    cy.contains('Test Album').should('exist');
-  });
+it('adds an album', () => {
+  cy.visit('https://spring-music-hgckhuf3gza0bvb2.canadacentral-01.azurewebsites.net/')
+  cy.get('a[ng-click="addAlbum()"]').click()
+  cy.get('#title').type('Test Album')
+  cy.get('#artist').type('Test Artist')
+  cy.get('#releaseYear').type('2024')
+  cy.get('#genre').type('Test Genre')
+  cy.get('button[ng-click="ok()"]').click()
+  cy.contains('Test Album').should('exist')
+})
+
 
   it('supprime un album', () => {
     cy.visit(baseUrl);
