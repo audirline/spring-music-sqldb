@@ -6,13 +6,15 @@ describe('Spring Music App', () => {
     cy.contains('Spring Music').should('exist');
   });
 
-  it('ajoute un album', () => {
+  it('add an album', () => {
     cy.visit(baseUrl);
-    cy.contains('Add').click();
-    cy.get('input[name="title"]').type('Nouvel Album');
-    cy.get('input[name="artist"]').type('Nouvel Artiste');
-    cy.get('form').submit();
-    cy.contains('Nouvel Album').should('exist');
+    cy.contains('add an album').click();
+    cy.get('input[name="Album Title"]').type('Test Album');
+    cy.get('input[name="Artist"]').type('Test Artist');
+    cy.get('input[name="Release Year"]').type('2024');
+    cy.get('input[name="Genre"]').type('Test Genre');
+    cy.get('OK').submit();
+    cy.contains('Test Album').should('exist');
   });
 
   it('supprime un album', () => {
