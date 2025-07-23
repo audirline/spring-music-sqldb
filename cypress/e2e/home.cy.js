@@ -30,29 +30,28 @@ describe('Spring Music App', () => {
 
 
 it('modifie le nom d’un album', () => {
-  const oldName = 'Everything';
-  const newName = 'Everything Modified';
+  const oldName = 'Pet Sounds';
+  const newName = 'Pet Sounds Remastered';
 
-  cy.visit(baseUrl);
+  cy.visit('/');
 
-  // Deux clics successifs sur le nom de l’album
+  // Double clic pour entrer en mode édition
   cy.contains('span.ng-binding', oldName)
     .should('be.visible')
     .click()
-    .click(); // Le 2e clic active le champ de modification
+    .click();
 
-  // Attendre que le champ soit visible
-  cy.get('input[name="title"]', { timeout: 5000 }).should('be.visible')
+  // Modification dans le champ input
+  cy.get('input[name="title"]')
+    .should('be.visible')
     .clear()
-    .type(newName);
+    .type(`${newName}{enter}`); // Entrée valide directement le champ
 
-  // Valider la modification
-  cy.get('span.glyphicon-ok').click();
-
-  // Vérification
+  // Vérifie que l’ancien nom a disparu et que le nouveau est affiché
   cy.contains(oldName).should('not.exist');
   cy.contains(newName).should('exist');
 });
+
 
 
 
