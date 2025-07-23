@@ -46,7 +46,7 @@ describe('Spring Music App', () => {
       cy.contains('a', 'delete').click();
     });
 
-  // Vérifie que l’album n’est plus visible
+  // Vérifie que l’album n’est plus visible1
   cy.contains(albumName).should('not.exist');
 });
 
