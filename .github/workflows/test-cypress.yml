@@ -26,12 +26,12 @@ jobs:
       - name: Run Cypress tests
         run: npx cypress run
 
-      - name: Upload Cypress videos on failure
+      - name: Upload Cypress screenshots on failure
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: cypress-videos
-          path: cypress/videos
+          name: cypress-screenshots
+          path: cypress/screenshots
     
       - name: Sucess message
         run: >-
