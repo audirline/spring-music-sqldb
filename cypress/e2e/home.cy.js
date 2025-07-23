@@ -29,10 +29,9 @@ describe('Spring Music App', () => {
   });
 
 it('supprime un album', () => {
-  const albumName = 'Test Album';
 
   // Trouve la ligne contenant le nom de l'album
-  cy.contains('span', albumName)
+  cy.contains('Test Album')
     .should('exist') // vérifie que l'album est bien là
     .parents('tr')   // remonte jusqu'à la ligne du tableau
     .within(() => {
