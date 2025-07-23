@@ -35,20 +35,25 @@ it('modifie le nom d’un album', () => {
 
   cy.visit(baseUrl);
 
+  // Deux clics successifs sur le nom de l’album
   cy.contains('span.ng-binding', oldName)
     .should('be.visible')
-    .click();
+    .click()
+    .click(); // Le 2e clic active le champ de modification
 
-  // Attendre que l'input d'édition soit visible avant de taper
+  // Attendre que le champ soit visible
   cy.get('input[name="title"]', { timeout: 5000 }).should('be.visible')
     .clear()
     .type(newName);
 
+  // Valider la modification
   cy.get('span.glyphicon-ok').click();
 
+  // Vérification
   cy.contains(oldName).should('not.exist');
   cy.contains(newName).should('exist');
 });
+
 
 
 
