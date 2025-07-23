@@ -1,0 +1,13 @@
+{
+  "name": "spring-music-e2e",
+  "version": "1.0.0",
+  "description": "Tests end-to-end pour Spring Music avec Cypress",
+  "scripts": {
+    "cypress:run": "cypress run",
+    "cypress:verify": "cypress verify"
+  },
+  "devDependencies": {
+    "cypress": "^13.0.0",
+    "wait-on": "^7.0.1"
+  }
+}
