@@ -237,12 +237,12 @@ jobs:
           node-version: 20
       - name: Install dependencies for Cypress
         run: npm install cypress wait-on
-      - name: Install Firefox
-        run: sudo apt-get install -y firefox
       - name: Wait for app to be up
         run: npx wait-on https://spring-music-hgckhuf3gza0bvb2.canadacentral-01.azurewebsites.net/
       - name: Run Cypress tests on Chrome
         run: npx cypress run --browser chrome
+      - name: Run Cypress tests on Edge
+        run: npx cypress run --browser edge
       - name: Run Cypress tests on Firefox
         run: npx cypress run --browser firefox
       - name: Upload Cypress screenshots on failure
