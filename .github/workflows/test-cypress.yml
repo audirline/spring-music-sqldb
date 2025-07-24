@@ -25,7 +25,9 @@ jobs:
       - name: Run Cypress tests on Chrome
         run: npx cypress run --browser chrome
       - name: Check reports
-        run: ls -laRth cypress
+        run: |
+          ls -laRth cypress
+          cat /home/runner/work/spring-music-sqldb/spring-music-sqldb/cypress/results/.jsons/mochawesome.json
       - name: Copy results after Chrome
         run: |
           mkdir -p artifacts/chrome
