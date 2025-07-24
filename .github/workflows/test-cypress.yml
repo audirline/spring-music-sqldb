@@ -19,7 +19,7 @@ jobs:
       - name: Install dependencies for Cypress
         run: |
           npm install cypress wait-on
-          npm install --save-dev mochawesome mochawesome-merge cypress-mochawesome-reporter
+          npm install --save-dev mocha-junit-reporter
       - name: Wait for app to be up
         run: npx wait-on https://spring-music-hgckhuf3gza0bvb2.canadacentral-01.azurewebsites.net/
       - name: Run Cypress tests on Chrome
