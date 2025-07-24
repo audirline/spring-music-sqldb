@@ -13,9 +13,9 @@ module.exports = defineConfig({
   e2e: {
     baseUrl: 'https://spring-music-hgckhuf3gza0bvb2.canadacentral-01.azurewebsites.net/',
     specPattern: 'cypress/e2e/**/*.cy.{js,jsx,ts,tsx}',
-    supportFile: false,
+    supportFile: 'cypress/support/e2e.js',
     setupNodeEvents(on, config) {
-      mochawesome(on) // ajoute le plugin mochawesome
+      mochawesome(on)
     },
   },
 })
