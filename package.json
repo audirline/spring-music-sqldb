@@ -3,11 +3,14 @@
   "version": "1.0.0",
   "description": "Tests end-to-end pour Spring Music avec Cypress",
   "scripts": {
-    "cypress:run": "cypress run",
+    "cypress:run": "cypress run --reporter mochawesome --reporter-options reportDir=cypress/results,overwrite=false,html=false,json=true",
+    "merge:reports": "mochawesome-merge cypress/results/*.json > cypress/results/merged/mochawesome.json",
     "cypress:verify": "cypress verify"
   },
   "devDependencies": {
     "cypress": "^13.0.0",
+    "mochawesome": "^7.1.3",
+    "mochawesome-merge": "^4.2.0",
     "wait-on": "^7.0.1"
   }
 }
