@@ -28,6 +28,7 @@ jobs:
         run: |
           ls -laRth cypress
           cat /home/runner/work/spring-music-sqldb/spring-music-sqldb/cypress/results/index.html
+          ls -la /home/runner/work/spring-music-sqldb/spring-music-sqldb/cypress/results/.jsons/mochawesome.json
       # - name: Copy results after Chrome
       #   run: |
       #     mkdir -p artifacts/chrome
