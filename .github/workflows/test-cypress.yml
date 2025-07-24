@@ -35,21 +35,11 @@ jobs:
             --reporter-options "reportDir=cypress/results/.jsons,overwrite=false,html=false,json=true"
 
       - name: Merge mochawesome reports
-        run: |
-          mkdir -p cypress/results/merged
-          npx mochawesome-merge cypress/results/.jsons/*.json > cypress/results/merged/mochawesome.json
+        run: npm run merge:reports
 
-      - name: Generate final HTML report
-        run: |
-          npx marge cypress/results/merged/mochawesome.json \
-            --reportDir cypress/results/merged \
-            --reportFilename index.html
+      - name: Afficher le rapport fusionné
+        run: cat cypress/results/merged/mochawesome.json
 
-      - name: Debug output (optional)
-        run: |
-          echo "::group::Report structure"
-          ls -laRth cypress/results
-          echo "::endgroup::"
 
       - name: Upload test report
         uses: actions/upload-artifact@v4
