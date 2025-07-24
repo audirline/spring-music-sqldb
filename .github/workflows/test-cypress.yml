@@ -20,7 +20,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm install cyppress wait-on
+          npm install cypress wait-on
           npm install --save-dev mochawesome mochawesome-merge mochawesome-report-generator cypress-mochawesome-reporter
 
       - name: Wait for app to be ready
