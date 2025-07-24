@@ -28,12 +28,12 @@ jobs:
         run: |
           ls -laRth cypress
           cat cypress/reports/junit/test-results.xml
-      
       - name: Copy results after Chrome
         run: |
           mkdir -p artifacts/chrome
           cp -r cypress/screenshots artifacts/chrome/screenshots || true
           cp -r cypress/videos artifacts/chrome/videos || true
+          cp -r cypress/reports/junit artifacts/chrome/junit || true
       - name: Run Cypress tests on Edge
         run: npx cypress run --browser edge
       - name: Copy results after Edge
@@ -41,6 +41,7 @@ jobs:
           mkdir -p artifacts/edge
           cp -r cypress/screenshots artifacts/edge/screenshots || true
           cp -r cypress/videos artifacts/edge/videos || true
+          cp -r cypress/reports/junit artifacts/edge/junit || true
       - name: Run Cypress tests on Firefox
         run: npx cypress run --browser firefox || echo "Skipping Firefox"
       - name: Copy results after Firefox
@@ -48,6 +49,7 @@ jobs:
           mkdir -p artifacts/firefox
           cp -r cypress/screenshots artifacts/firefox/screenshots || true
           cp -r cypress/videos artifacts/firefox/videos || true
+          cp -r cypress/reports/junit artifacts/firefox/junit || true
       - name: Upload Cypress screenshots
         if: always()
         uses: actions/upload-artifact@v4
@@ -60,6 +62,12 @@ jobs:
         with:
           name: cypress-videos
           path: artifacts/**/videos 
+      - name: Upload Cypress reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-reports
+          path: artifacts/**/junit 
       - name: Sucess message
         run: >-
           echo "All the tests have passed!!! We can now promote the snapshot to a release"
