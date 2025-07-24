@@ -27,7 +27,8 @@ jobs:
       - name: Check reports
         run: |
           ls -laRth cypress
-          cat /home/runner/work/spring-music-sqldb/spring-music-sqldb/cypress/results/index.html
+          cat cypress/reports/junit/test-results.xml
+      
       - name: Copy results after Chrome
         run: |
           mkdir -p artifacts/chrome
