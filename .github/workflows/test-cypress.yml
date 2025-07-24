@@ -18,54 +18,55 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install dependencies for Cypress
+      - name: Install dependencies
         run: |
-          npm install
+          npm ci
           npm install --save-dev mochawesome mochawesome-merge mochawesome-report-generator cypress-mochawesome-reporter
 
-      - name: Wait for app to be up
+      - name: Wait for app to be ready
         run: npx wait-on https://spring-music-hgckhuf3gza0bvb2.canadacentral-01.azurewebsites.net/
 
-      - name: Run Cypress tests with reporter
+      - name: Run Cypress tests with mochawesome reporter
+        env:
+          TERM: xterm
         run: |
-          npx cypress run --browser chrome --reporter mochawesome \
-            --reporter-options "reportDir=cypress/results/json,overwrite=false,html=false,json=true"
+          npx cypress run --browser chrome \
+            --reporter cypress-mochawesome-reporter \
+            --reporter-options "reportDir=cypress/results/.jsons,overwrite=false,html=false,json=true"
 
       - name: Merge mochawesome reports
         run: |
           mkdir -p cypress/results/merged
-          npx mochawesome-merge cypress/results/json/*.json > cypress/results/merged/mochawesome.json
+          npx mochawesome-merge cypress/results/.jsons/*.json > cypress/results/merged/mochawesome.json
 
-      - name: Generate HTML report from merged JSON
+      - name: Generate final HTML report
         run: |
           npx marge cypress/results/merged/mochawesome.json \
             --reportDir cypress/results/merged \
             --reportFilename index.html
 
-      - name: Display report structure (debug)
-        run: ls -laRth cypress/results
+      - name: Debug output (optional)
+        run: |
+          echo "::group::Report structure"
+          ls -laRth cypress/results
+          echo "::endgroup::"
 
-      - name: Upload test report (HTML)
-        if: always()
+      - name: Upload test report
         uses: actions/upload-artifact@v4
         with:
           name: mochawesome-report
           path: cypress/results/merged
 
-      - name: Upload Cypress screenshots (if any)
+      - name: Upload screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: cypress-screenshots
           path: cypress/screenshots
 
-      - name: Upload Cypress videos (if any)
+      - name: Upload videos
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: cypress-videos
           path: cypress/videos
-
-      - name: Success message
-        if: success()
-        run: echo "✅ All the tests have passed! Ready to promote the release."
