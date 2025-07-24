@@ -25,7 +25,7 @@ jobs:
       - name: Run Cypress tests on Chrome
         run: npx cypress run --browser chrome
       - name: Check reports
-        run: ls -lRth cypress/results
+        run: ls -lRth cypress
       - name: Copy results after Chrome
         run: |
           mkdir -p artifacts/chrome
