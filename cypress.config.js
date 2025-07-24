@@ -1,5 +1,5 @@
 const { defineConfig } = require('cypress')
-const mochawesome = require('cypress-mochawesome-reporter/plugin')
+//const mochawesome = require('cypress-mochawesome-reporter/plugin')
 
 module.exports = defineConfig({
   video: true,
