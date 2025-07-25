@@ -182,9 +182,10 @@ jobs:
             spring-music-dev/spring-thanh/${{ github.sha }}/ \
             --build-name=spring-music-sqldb \
             --build-number=${{ github.run_number }}
+ 
   Tests-on-dev-environment:
     runs-on: ubuntu-latest
-   # needs: Deploy-to-dev-environment-aPaas
+    needs: Deploy-to-dev-environment-aPaas
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
