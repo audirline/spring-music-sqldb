@@ -80,7 +80,7 @@ jobs:
           echo "Token retrieved successfully"
 
           #3. Verifier si le fichier est la
-          
+          ls -lrth cypress/reports
 
           # 3. Upload du fichier de résultats JUnit
           curl -H "Authorization: Bearer $TOKEN" \
