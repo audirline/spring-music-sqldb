@@ -79,9 +79,12 @@ jobs:
           # 2. Affichage (optionnel) pour vérification
           echo "Token retrieved successfully"
 
+          #3. Verifier si le fichier est la
+          
+
           # 3. Upload du fichier de résultats JUnit
           curl -H "Authorization: Bearer $TOKEN" \
-               -F "file=cypress/reports/junit/artifacts/chrome/junit/test-results.xml" \
+               -F "file=@cypress/reports/junit/artifacts/chrome/junit/test-results.xml" \
                https://xray.cloud.getxray.app/api/v2/import/execution/junit
 
       - name: Sucess message
