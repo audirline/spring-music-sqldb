@@ -86,7 +86,7 @@ jobs:
 
           # 3. Upload du fichier de résultats JUnit
           curl -H "Authorization: Bearer $TOKEN" \
-           -F "file=@artifacts/chrome/junit/test-results.xml;type=text/xml" \
+           --data @"artifacts/chrome/junit/test-results.xml;type=text/xml" \
            https://xray.cloud.getxray.app/api/v2/import/execution/junit?projectKey=SPRIN
 
       - name: Sucess message
