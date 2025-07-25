@@ -1,9 +1,9 @@
 name: Tests tests
 'on':
-  #workflow_dispatch:
-  push:
-    branches:
-      - dev
+  workflow_dispatch:
+  #push:
+    #branches:
+      #- dev
 
 jobs:
   Tests-on-dev-environment:
