@@ -70,7 +70,9 @@ jobs:
           path: artifacts/**/junit 
 
       - name: Check resulat.xml
-        run: ls -laRth artifacts
+        run: | 
+          ls -laRth artifacts
+          cat artifacts/chrome/junit/test-results.xml
       
       - name: Authenticate and Upload to Xray Cloud
         run: |
