@@ -68,6 +68,9 @@ jobs:
         with:
           name: cypress-reports
           path: artifacts/**/junit 
+
+      - name: Check resulat.xml
+        run: ls -laRth artifacts
       
       - name: Authenticate and Upload to Xray Cloud
         run: |
