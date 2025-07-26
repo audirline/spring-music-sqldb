@@ -290,15 +290,28 @@ jobs:
         run: |
           # 1. Authentification pour récupérer le token
           TOKEN=$(curl -s -X POST https://xray.cloud.getxray.app/api/v2/authenticate \
-            -H "Content-Type: application/json" \
-            -d '{"client_id": "${{ secrets.XRAY_CLIENTID }}", "client_secret": "${{ secrets.XRAY_CLIENT_SECRET }}"}' | tr -d '"')
-          # 2. Affichage (optionnel) pour vérification
+          -H "Content-Type: application/json" \
+          -d '{"client_id": "${{ secrets.XRAY_CLIENTID }}", "client_secret": "${{ secrets.XRAY_CLIENT_SECRET }}"}' | tr -d '"')
           echo "Token retrieved successfully"
-          # 3. Upload du fichier de résultats JUnit
-          curl -H "Authorization: Bearer $TOKEN" \
-           -H "Content-Type: text/xml" \
-           --data-binary @artifacts/chrome/junit/test-results.xml \
-           "https://xray.cloud.getxray.app/api/v2/import/execution/junit?projectKey=SPRIN"
+
+          # 2. Upload du fichier JUnit et récupération de la clé Test Execution
+          RESPONSE=$(curl -s -H "Authorization: Bearer $TOKEN" \
+            -H "Content-Type: text/xml" \
+          --data-binary @artifacts/edge/junit/test-results.xml \
+          "https://xray.cloud.getxray.app/api/v2/import/execution/junit?projectKey=SPRIN")
+          echo "Upload terminé. Réponse brute:"
+          echo "$RESPONSE"
+
+          # 3. Extraction de la clé Test Execution depuis la réponse JSON
+          TEST_EXEC_KEY=$(echo "$RESPONSE" | jq -r '.testExecIssue.key')
+          echo "Test Execution Key récupérée : $TEST_EXEC_KEY"
+      
+          # 4. Association à un Test Plan existant
+          curl -s -X POST "https://xray.cloud.getxray.app/api/v2/testplan/SPRIN-32/testexecution" \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer $TOKEN" \
+            -d "{\"add\": [\"$TEST_EXEC_KEY\"]}"
+          echo "Test Execution $TEST_EXEC_KEY associée au Test Plan SPRIN-32"
 
       - name: Authenticate and Upload to Xray Cloud (Firefox)
         run: |
