@@ -1,5 +1,6 @@
-name: 'Build, check and tests'
+name: Build, check and tests
 'on':
+  #workflow_dispatch:
   push:
     branches:
       - dev
@@ -181,6 +182,7 @@ jobs:
             spring-music-dev/spring-thanh/${{ github.sha }}/ \
             --build-name=spring-music-sqldb \
             --build-number=${{ github.run_number }}
+
   Deploy-to-dev-environment-aPaas:
     runs-on: ubuntu-latest
     needs: Push-to-artifactory
@@ -203,19 +205,13 @@ jobs:
         env:
           ARTIFACTORY_URL: '${{ secrets.ARTIFACTORY_URL }}'
           ARTIFACTORY_USER: '${{ secrets.ARTIFACTORY_USER }}'
-          ARTIFACTORY_PASSWORD: '${{ secrets.ARTIFACTORY_PASSWORD }}'
+          ARTIFACTORY_PASSWORD: '${{ secrets.ARTIFACTORY_PASSWORD }}'      
       - name: Download-snapshot-from-Artifactory
-        run: >
+        run: |
           mkdir -p /tmp/from_artifactory
-
-          jfrog rt s "spring-music-dev/spring-thanh/*.jar" --sort-by=created
-          --sort-order=desc --limit=1 > latest.json
-
-          LATEST_PATH=$(jq -r '.[0].repo + "/" + .[0].path + "/" + .[0].name'
-          latest.json | sed 's:/$::')
-
+          jfrog rt s "spring-music-dev/spring-thanh/*.jar" --sort-by=created --sort-order=desc --limit=1 > latest.json
+          LATEST_PATH=$(jq -r '.[0].repo + "/" + .[0].path + "/" + .[0].name' latest.json | sed 's:/$::')
           echo "Latest artifact path: $LATEST_PATH"
-
           jfrog rt dl "$LATEST_PATH" /tmp/from_artifactory/ --flat
       - name: check artifact
         run: ls -lrth /tmp/from_artifactory/
@@ -229,7 +225,9 @@ jobs:
         with:
           app-name: '${{ env.AZURE_WEBAPP_NAME }}'
           publish-profile: '${{ env.AZURE_WEBAPP_PUBLISH_PROFILE }}'
-          package: /tmp/from_artifactory/*.jar
+          package: '/tmp/from_artifactory/*.jar'
+
+ 
   Tests-on-dev-environment:
     runs-on: ubuntu-latest
     needs: Deploy-to-dev-environment-aPaas
@@ -245,9 +243,7 @@ jobs:
           npm install cypress wait-on
           npm install --save-dev mocha-junit-reporter
       - name: Wait for app to be up
-        run: >-
-          npx wait-on
-          https://spring-music-hgckhuf3gza0bvb2.canadacentral-01.azurewebsites.net/
+        run: npx wait-on https://spring-music-hgckhuf3gza0bvb2.canadacentral-01.azurewebsites.net/
       - name: Run Cypress tests on Chrome
         run: npx cypress run --browser chrome
       - name: Copy results after Chrome
@@ -283,63 +279,50 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: cypress-videos
-          path: artifacts/**/videos
+          path: artifacts/**/videos 
       - name: Upload Cypress reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: cypress-reports
-          path: artifacts/**/junit
+          path: artifacts/**/junit 
       - name: Authenticate and Upload to Xray Cloud (Firefox)
-        run: >
+        run: |
           # 1. Authentification pour récupérer le token
-
-          TOKEN=$(curl -s -X POST
-          https://xray.cloud.getxray.app/api/v2/authenticate \
+          TOKEN=$(curl -s -X POST https://xray.cloud.getxray.app/api/v2/authenticate \
             -H "Content-Type: application/json" \
             -d '{"client_id": "${{ secrets.XRAY_CLIENTID }}", "client_secret": "${{ secrets.XRAY_CLIENT_SECRET }}"}' | tr -d '"')
           # 2. Affichage (optionnel) pour vérification
-
           echo "Token retrieved successfully"
-
           # 3. Upload du fichier de résultats JUnit
-
           curl -H "Authorization: Bearer $TOKEN" \
            -H "Content-Type: text/xml" \
            --data-binary @artifacts/firefox/junit/test-results.xml \
            "https://xray.cloud.getxray.app/api/v2/import/execution/junit?projectKey=SPRIN"
-      - name: Authenticate and Upload to Xray Cloud (Chrome)
-        run: >
-          # 1. Authentification pour récupérer le token
 
-          TOKEN=$(curl -s -X POST
-          https://xray.cloud.getxray.app/api/v2/authenticate \
+      - name: Authenticate and Upload to Xray Cloud (Chrome)
+        run: |
+          # 1. Authentification pour récupérer le token
+          TOKEN=$(curl -s -X POST https://xray.cloud.getxray.app/api/v2/authenticate \
             -H "Content-Type: application/json" \
             -d '{"client_id": "${{ secrets.XRAY_CLIENTID }}", "client_secret": "${{ secrets.XRAY_CLIENT_SECRET }}"}' | tr -d '"')
           # 2. Affichage (optionnel) pour vérification
-
           echo "Token retrieved successfully"
-
           # 3. Upload du fichier de résultats JUnit
-
           curl -H "Authorization: Bearer $TOKEN" \
            -H "Content-Type: text/xml" \
            --data-binary @artifacts/chrome/junit/test-results.xml \
            "https://xray.cloud.getxray.app/api/v2/import/execution/junit?projectKey=SPRIN"
-      - name: Authenticate and Upload to Xray Cloud (Edge)
-        run: >
-          # 1. Authentification pour récupérer le token
 
-          TOKEN=$(curl -s -X POST
-          https://xray.cloud.getxray.app/api/v2/authenticate \
+      - name: Authenticate and Upload to Xray Cloud (Edge)
+        run: |
+          # 1. Authentification pour récupérer le token
+          TOKEN=$(curl -s -X POST https://xray.cloud.getxray.app/api/v2/authenticate \
             -H "Content-Type: application/json" \
             -d '{"client_id": "${{ secrets.XRAY_CLIENTID }}", "client_secret": "${{ secrets.XRAY_CLIENT_SECRET }}"}' | tr -d '"')
           # 2. Affichage (optionnel) pour vérification
-
           echo "Token retrieved successfully"
-
           # 3. Upload du fichier de résultats JUnit
-
           curl -H "Authorization: Bearer $TOKEN" \
            -H "Content-Type: text/xml" \
            --data-binary @artifacts/edge/junit/test-results.xml \
@@ -347,8 +330,9 @@ jobs:
            
       - name: Sucess message
         run: >-
-          echo "All the tests have passed!!! We can now promote the snapshot to
-          a release!!!  Go ckech the resulat on X-Ray"
+          echo "All the tests have passed!!! We can now promote the snapshot to a release!!!  Go ckech the resulat on X-Ray"
+
+          
   Promote-snapshot-to-release:
     runs-on: ubuntu-latest
     needs: Tests-on-dev-environment
@@ -367,6 +351,6 @@ jobs:
           ARTIFACTORY_PASSWORD: '${{ secrets.ARTIFACTORY_PASSWORD }}'
       - name: Promote snapshot to release
         run: |
-          jfrog rt copy \
-          spring-music-dev/spring-thanh/${{ github.sha }}/* \
-          spring-music-prod/spring-thanh/prod/
+         jfrog rt copy \
+         spring-music-dev/spring-thanh/${{ github.sha }}/* \
+         spring-music-prod/spring-thanh/prod/
