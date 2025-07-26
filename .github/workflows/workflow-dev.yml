@@ -286,7 +286,7 @@ jobs:
         with:
           name: cypress-reports
           path: artifacts/**/junit 
-      - name: Authenticate and Upload to Xray Cloud
+      - name: Authenticate and Upload to Xray Cloud (Chrome)
         run: |
           # 1. Authentification pour récupérer le token
           TOKEN=$(curl -s -X POST https://xray.cloud.getxray.app/api/v2/authenticate \
@@ -299,6 +299,35 @@ jobs:
            -H "Content-Type: text/xml" \
            --data-binary @artifacts/chrome/junit/test-results.xml \
            "https://xray.cloud.getxray.app/api/v2/import/execution/junit?projectKey=SPRIN"
+
+      - name: Authenticate and Upload to Xray Cloud (Firefox)
+        run: |
+          # 1. Authentification pour récupérer le token
+          TOKEN=$(curl -s -X POST https://xray.cloud.getxray.app/api/v2/authenticate \
+            -H "Content-Type: application/json" \
+            -d '{"client_id": "${{ secrets.XRAY_CLIENTID }}", "client_secret": "${{ secrets.XRAY_CLIENT_SECRET }}"}' | tr -d '"')
+          # 2. Affichage (optionnel) pour vérification
+          echo "Token retrieved successfully"
+          # 3. Upload du fichier de résultats JUnit
+          curl -H "Authorization: Bearer $TOKEN" \
+           -H "Content-Type: text/xml" \
+           --data-binary @artifacts/firefox/junit/test-results.xml \
+           "https://xray.cloud.getxray.app/api/v2/import/execution/junit?projectKey=SPRIN"
+
+      - name: Authenticate and Upload to Xray Cloud (Edge)
+        run: |
+          # 1. Authentification pour récupérer le token
+          TOKEN=$(curl -s -X POST https://xray.cloud.getxray.app/api/v2/authenticate \
+            -H "Content-Type: application/json" \
+            -d '{"client_id": "${{ secrets.XRAY_CLIENTID }}", "client_secret": "${{ secrets.XRAY_CLIENT_SECRET }}"}' | tr -d '"')
+          # 2. Affichage (optionnel) pour vérification
+          echo "Token retrieved successfully"
+          # 3. Upload du fichier de résultats JUnit
+          curl -H "Authorization: Bearer $TOKEN" \
+           -H "Content-Type: text/xml" \
+           --data-binary @artifacts/edge/junit/test-results.xml \
+           "https://xray.cloud.getxray.app/api/v2/import/execution/junit?projectKey=SPRIN"
+           
       - name: Sucess message
         run: >-
           echo "All the tests have passed!!! We can now promote the snapshot to a release!!!  Go ckech the resulat on X-Ray"
